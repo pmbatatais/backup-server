@@ -73,7 +73,8 @@ Rode o script adaptado para FreeBSD:
 sh install.sh
 ```
 
-> ⚠️ Observação: Executar `./install.sh` direto pode não funcionar em alguns ambientes. \
+> 📌 Parâmetro opcional: `--path /caminho/montagem/disco`. \
+> 📢 Observação: Executar `./install.sh` direto pode não funcionar em alguns ambientes. \
 > 🤓 Use sempre `sh install.sh`.
 
 O script instalará o **Rest Server** e criará o serviço `rest_server` em `/usr/local/etc/rc.d/`.
