@@ -179,7 +179,7 @@ create_rcd_service() {
   local rcd_path="/usr/local/etc/rc.d/rest_server"
   echo "Creating rc.d service at $rcd_path"
 
-  run_cmd tee "$rcd_path" > /dev/null << 'EOM'
+  run_cmd tee "$rcd_path" > /dev/null << EOM
 #!/bin/sh
 
 # PROVIDE: rest_server
