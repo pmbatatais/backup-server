@@ -190,49 +190,49 @@ create_rcd_service() {
 
 name="rest_server"
 path="${REST_SERVER_PATH}"
-rcvar=rest_server_enable
-pidfile="/var/run/${name}.pid"
+rcvar="rest_server_enable"
+pidfile="/var/run/\${name}.pid"
 command="/usr/local/bin/rest_server"
-command_args="--path=${path} --no-auth"
+command_args="--path=\${path} --no-auth"
 log_file="/var/log/rest_server.log"
-required_files="${command}"
+required_files="\${command}"
 
-load_rc_config $name
-: ${rest_server_enable:="NO"}
+load_rc_config \$name
+: \${rest_server_enable:="NO"}
 
-start_cmd="${name}_start"
-stop_cmd="${name}_stop"
-status_cmd="${name}_status"
+start_cmd="\${name}_start"
+stop_cmd="\${name}_stop"
+status_cmd="\${name}_status"
 
 rest_server_start() {
-    /usr/sbin/daemon -f -p ${pidfile} ${command} ${command_args} >> ${log_file}
+    /usr/sbin/daemon -f -p \${pidfile} \${command} \${command_args} >> \${log_file}
 }
 
 rest_server_stop() {
-    if [ -f ${pidfile} ]; then
-        kill $(cat ${pidfile}) && rm -f ${pidfile}
+    if [ -f \${pidfile} ]; then
+        kill \$(cat \${pidfile}) && rm -f \${pidfile}
     else
-        echo "PID file não encontrado: ${pidfile}"
+        echo "PID file não encontrado: \${pidfile}"
     fi
 }
 
 rest_server_status() {
-    if [ -f ${pidfile} ]; then
-        if ps -p $(cat ${pidfile}) > /dev/null 2>&1; then
-            echo "${name} está em execução (PID $(cat ${pidfile}))"
+    if [ -f \${pidfile} ]; then
+        if ps -p \$(cat \${pidfile}) > /dev/null 2>&1; then
+            echo "\${name} está em execução (PID \$(cat \${pidfile}))"
             return 0
         else
-            echo "${name} não está em execução, mas o PID file existe."
+            echo "\${name} não está em execução, mas o PID file existe."
             return 1
         fi
     else
-        echo "${name} não está em execução."
+        echo "\${name} não está em execução."
         return 1
     fi
 }
 
-load_rc_config $name
-run_rc_command "$1"
+load_rc_config \$name
+run_rc_command "\$1"
 EOM
 
   run_cmd chmod +x "$rcd_path"
