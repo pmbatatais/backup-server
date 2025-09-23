@@ -1,0 +1,7 @@
+Copie o binário "backrest" e install.sh para qualquer diretório do servidor FreeBSD
+
+
+Execute os comandos:
+chmod +x install.sh && bash install.sh
+
+Teste no navegador: ip_servidor:9898 - A porta padrão do cliente é 9898
