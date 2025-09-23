@@ -9,7 +9,7 @@ Este guia descreve como configurar um **servidor de backup** usando **Rest Serve
 O **Rest Server** é mantido pela equipe do [**Restic**](https://github.com/restic/rest-server).  
 Meus agradecimentos aos criadores pelo excelente trabalho que torna esta solução possível.
 
-Eu, [**Leonardo Ribeiro**](https://github.com/xiribock), adaptei o script `install.sh` para ser totalmente compatível com **FreeBSD**.  
+Eu, **Leonardo Ribeiro**, adaptei o script `install.sh` para ser totalmente compatível com **FreeBSD**.  
 Repositório adaptado: <https://github.com/pmbatatais/backup-server.git>
 
 ---
@@ -40,8 +40,7 @@ pkg install -y git
 ### **2️⃣ Clonar o repositório**
 
 ```shell
-git clone https://github.com/pmbatatais/backup-server.git
-cd backup-server
+git clone https://github.com/pmbatatais/backup-server.git && cd backup-server
 ```
 
 ### **3️⃣ Preparar o script de instalação**
@@ -64,7 +63,7 @@ zfs create -o mountpoint=/mnt/backups/rest-server -o compression=lz4 zroot/rest-
 zfs list
 ```
 
-💡 **Dica:** Este dataset será o diretório onde os backups `Rest` serão armazenados.
+💡 **Dica:** Este dataset será o diretório onde os `Restic-Backups` serão armazenados.
 
 ### **5️⃣ Executar a instalação**
 
@@ -75,7 +74,7 @@ sh install.sh
 ```
 
 > ⚠️ Observação: Executar `./install.sh` direto pode não funcionar em alguns ambientes. \
-> Use sempre `sh install.sh`.
+> 🤓 Use sempre `sh install.sh`.
 
 O script instalará o **Rest Server** e criará o serviço `rest_server` em `/usr/local/etc/rc.d/`.
 
@@ -112,12 +111,7 @@ service rest_server status
 ```
 
 - Dataset ZFS utilizado: `zroot/rest-server`
-- Comandos usados para criar e montar o dataset:
-
-```
-zfs create zroot/rest-server
-zfs set mountpoint=/mnt/backups/rest-server zroot/rest-server
-```
+- Ponto de montagem do dataset: `/mnt/backups/rest-server`
 
 ---
 
@@ -125,6 +119,7 @@ zfs set mountpoint=/mnt/backups/rest-server zroot/rest-server
 
 - Projeto **Rest Server**: <https://github.com/restic/rest-server>
 - Ferramenta **Restic**: <https://restic.net>
+- Tudo sobre **ZFS**: <https://docs.freebsd.org/pt-br/books/handbook/zfs/>
 - Repositório adaptado para FreeBSD: <https://github.com/pmbatatais/backup-server.git>
 - Visite meus repositórios: <https://github.com/xiribock>
 
