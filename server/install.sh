@@ -2,8 +2,8 @@
 
 cd "$(dirname "$0")" # cd to the directory of this script
 
-# path of repository (default or --path argument)
-REST_SERVER_PATH="/mnt/backups/restic-server"
+# Caminho do repositório (argumento ou padrão)
+REST_SERVER_PATH="/mnt/backups/rest-server"
 for arg in "$@"; do
   case $arg in
     --path=*)
