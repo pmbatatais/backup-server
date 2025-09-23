@@ -2,6 +2,17 @@
 
 cd "$(dirname "$0")" # cd to the directory of this script
 
+# path of repository (default or --path argument)
+REST_SERVER_PATH="/mnt/backups/restic-server"
+for arg in "$@"; do
+  case $arg in
+    --path=*)
+      REST_SERVER_PATH="${arg#*=}"
+      shift
+      ;;
+  esac
+done
+
 # Detect sudo or fallback
 run_cmd() {
   if command -v sudo >/dev/null 2>&1; then
@@ -52,7 +63,7 @@ Type=simple
 # You may prefer to use a different user or group on your system.
 User=www-data
 Group=www-data
-ExecStart=/usr/local/bin/rest_server --path /mnt/backups
+ExecStart=/usr/local/bin/rest_server --path ${REST_SERVER_PATH}
 Restart=always
 RestartSec=5
 
@@ -66,7 +77,7 @@ RestartSec=5
 
 # IMPORTANT!
 # The following line must be customised to your individual requirements.
-ReadWritePaths=/mnt/backups
+ReadWritePaths=${REST_SERVER_PATH}
 
 # Set to `UMask=007` and pass `--group-accessible-repos` to rest_server to
 # make created files group-readable
@@ -178,7 +189,7 @@ create_rcd_service() {
 . /etc/rc.subr
 
 name="rest_server"
-path="/mnt/backups"
+path="${REST_SERVER_PATH}"
 rcvar=rest_server_enable
 pidfile="/var/run/${name}.pid"
 command="/usr/local/bin/rest_server"
