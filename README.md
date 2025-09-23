@@ -9,7 +9,7 @@ Este guia descreve como configurar um **servidor de backup** usando **Rest Serve
 O **Rest Server** é mantido pela equipe do [**Restic**](https://github.com/restic/rest-server).  
 Meus agradecimentos aos criadores pelo excelente trabalho que torna esta solução possível.
 
-Eu, **Leonardo Ribeiro**, adaptei o script `install.sh` para ser totalmente compatível com **FreeBSD**.  
+Eu, [**Leonardo Ribeiro**](https://github.com/xiribock), adaptei o script `install.sh` para ser totalmente compatível com **FreeBSD**.  
 Repositório adaptado: <https://github.com/pmbatatais/backup-server.git>
 
 ---
@@ -126,8 +126,10 @@ zfs set mountpoint=/mnt/backups/rest-server zroot/rest-server
 - Projeto **Rest Server**: <https://github.com/restic/rest-server>
 - Ferramenta **Restic**: <https://restic.net>
 - Repositório adaptado para FreeBSD: <https://github.com/pmbatatais/backup-server.git>
+- Visite meus repositórios: <https://github.com/xiribock>
 
 ---
 
-✍️ Criado com dedicação e ZFS por **Leonardo Ribeiro**  
-💡 Agora você tem um servidor de backup pronto para receber seus dados de forma segura e confiável!
+### 💡 Agora você tem um servidor de backup pronto para receber seus dados de forma segura e confiável!
+
+✍️ Criado com dedicação por **Leonardo Ribeiro**  
