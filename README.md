@@ -35,13 +35,13 @@ Repositório adaptado: <https://github.com/pmbatatais/backup-server.git>
 
 No FreeBSD, use:
 
-```shell
-pkg install -y git
+```sh
+sudo pkg install -y git
 ```
 
 ### **2️⃣ Clonar o repositório**
 
-```shell
+```sh
 git clone https://github.com/pmbatatais/backup-server.git && cd backup-server
 ```
 
@@ -50,7 +50,7 @@ git clone https://github.com/pmbatatais/backup-server.git && cd backup-server
 Dê permissão de execução ao script:
 
 ```shell
-chmod +x install.sh
+sudo chmod +x install.sh
 ```
 
 ### **4️⃣ Criar o dataset ZFS para os backups**
@@ -59,10 +59,10 @@ Se ainda não tiver criado o dataset, faça o seguinte:
 
 ```
 # Criar dataset zfs
-zfs create -o mountpoint=/mnt/backups/rest-server -o compression=lz4 zroot/rest-server
+sudo zfs create -o mountpoint=/mnt/backups/rest-server -o compression=lz4 zroot/rest-server
 
 # Verificar se o dataset está montado corretamente
-zfs list
+sudo zfs list
 ```
 
 💡 **Dica:** Este dataset será o diretório onde os `Restic-Backups` serão armazenados.
@@ -72,20 +72,67 @@ zfs list
 Rode o script adaptado para FreeBSD:
 
 ```shell
-sh install.sh
+sudo sh install.sh
 ```
 
 > 📢 Observação: Executar `./install.sh` direto pode não funcionar em alguns ambientes. \
 > 🤓 Use sempre `sh install.sh`.
 
-
 Você também pode modificar o caminho do repositório e a porta TCP:
 
 ```shell
-sh install.sh --path=/backups/repo_restic --port=8081
+sudo sh install.sh --path=/backups/repo_restic --port=8081
 ```
 
-O script instalará o **Rest Server** e criará o serviço `rest_server` em `/usr/local/etc/rc.d/`.
+### 6️⃣ **Dica Bônus: Usuário SFTP Somente Leitura**
+> Para permitir que um técnico ou usuário visualize os repositórios do REST Server **sem alterar ou excluir nada**, siga este passo a passo:
+
+#### 👥 6.1. Criar o grupo `sftpusers` (se ainda não existir)
+```sh
+sudo pw groupadd sftpusers
+```
+
+#### 👤 6.2. Criar o usuário e adicioná-lo ao grupo `sftpusers`
+
+```sh
+sudo pw useradd readonly -m -d /mnt/backups/rest-server -s /usr/sbin/nologin -G sftpusers
+sudo passwd readonly
+```
+> - `readonly`: nome do usuário de exemplo  
+> - `/mnt/backups/rest-server`: diretório dos repositórios  
+> - `/usr/sbin/nologin`: impede login SSH interativo
+
+#### 🔒 6.3. Configurar SSH para Chroot (enjaular o usuário)
+
+No `/etc/ssh/sshd_config` adicione:
+
+```conf
+Match Group sftpusers
+    ChrootDirectory %h
+    ForceCommand internal-sftp
+    AllowTcpForwarding no
+    X11Forwarding no
+```
+
+> `%h` garante que o usuário fique **preso ao próprio diretório home**, sem acesso a outros diretórios do sistema
+
+#### 📂 6.4. Ajustar permissões para leitura apenas
+
+```sh
+sudo chown -R root:sftpusers /mnt/backups/rest-server
+sudo chmod -R 755 /mnt/backups/rest-server
+```
+> O usuário pode navegar e baixar arquivos, **mas não criar, alterar ou excluir**. \
+> Subdiretórios devem seguir a mesma regra de propriedade `root:sftpusers`
+
+#### ⚡ 6.5. Testar o acesso SFTP
+```sh
+sftp readonly@ip_do_servidor
+```
+> O usuário consegue visualizar e baixar arquivos, mas tentativas de escrita **serão negadas**.
+
+### ✅ **Resumo:** Ideal para auditoria, consultas externas ou backups.  
+> O usuário **fica seguro e enjaulado**, sem risco de modificar os repositórios do REST Server.
 
 ---
 
@@ -94,33 +141,20 @@ O script instalará o **Rest Server** e criará o serviço `rest_server` em `/us
 - **Iniciar o serviço:**
 
 ```shell
-service rest_server start
+sudo service rest_server start
 ```
 
 - **Parar o serviço:**
 
 ```shell
-service rest_server stop
+sudo service rest_server stop
 ```
 
 - **Verificar status:**
 
 ```shell
-service rest_server status
+sudo service rest_server status
 ```
-
----
-
-## **📂 Estrutura de armazenamento**
-
-- Diretório dos backups:
-
-```
-/mnt/backups/rest-server
-```
-
-- Dataset ZFS utilizado: `zroot/rest-server`
-- Ponto de montagem do dataset: `/mnt/backups/rest-server`
 
 ---
 
