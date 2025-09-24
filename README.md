@@ -73,9 +73,15 @@ Rode o script adaptado para FreeBSD:
 sh install.sh
 ```
 
-> 📌 Parâmetro opcional: `--path /caminho/montagem/disco`. \
 > 📢 Observação: Executar `./install.sh` direto pode não funcionar em alguns ambientes. \
 > 🤓 Use sempre `sh install.sh`.
+
+
+Você também pode modificar o caminho do repositório e a porta TCP:
+
+```shell
+sh install.sh --path=/backups/repo_restic --port=8081
+```
 
 O script instalará o **Rest Server** e criará o serviço `rest_server` em `/usr/local/etc/rc.d/`.
 
@@ -119,10 +125,9 @@ service rest_server status
 ## **🔗 Referências**
 
 - Projeto **Rest Server**: <https://github.com/restic/rest-server>
-- Ferramenta **Restic**: <https://restic.net>
+- Ferramenta de Backup **Restic**: <https://restic.net>
 - Tudo sobre **ZFS**: <https://docs.freebsd.org/pt-br/books/handbook/zfs/>
 - Repositório adaptado para FreeBSD: <https://github.com/pmbatatais/backup-server.git>
-- Visite meus repositórios: <https://github.com/xiribock>
 
 ---
 
