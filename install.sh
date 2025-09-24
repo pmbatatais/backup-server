@@ -14,7 +14,6 @@ for arg in "$@"; do
       REST_SERVER_PATH="${arg#*=}"
       shift
       ;;
-  case $arg in
     --port=*)
       REST_SERVER_PORT="${arg#*=}"
       shift
