@@ -202,7 +202,7 @@ port="${REST_SERVER_PORT}"
 rcvar="rest_server_enable"
 pidfile="/var/run/\${name}.pid"
 command="/usr/local/bin/rest_server"
-command_args="--path=\${path} --listen 0.0.0.0:\${port} --no-auth"
+command_args="--path=\${path} --listen=:\${port} --no-auth"
 log_file="/var/log/rest_server.log"
 required_files="\${command}"
 
