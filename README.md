@@ -177,7 +177,3 @@ sudo service rest_server status
 - Repositório adaptado para FreeBSD: <https://github.com/pmbatatais/backup-server.git>
 
 ---
-
-### 💡 Agora você tem um servidor de backup pronto para receber seus dados de forma segura e confiável!
-
-✍️ Criado com dedicação por **Leonardo Ribeiro**  
