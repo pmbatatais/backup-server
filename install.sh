@@ -4,10 +4,19 @@ cd "$(dirname "$0")" # cd to the directory of this script
 
 # Caminho do repositório (argumento ou padrão)
 REST_SERVER_PATH="/mnt/backups/rest-server"
+
+# Porta do servidor REST (Padrão :8000)
+REST_SERVER_PORT="8000"
+
 for arg in "$@"; do
   case $arg in
     --path=*)
       REST_SERVER_PATH="${arg#*=}"
+      shift
+      ;;
+  case $arg in
+    --port=*)
+      REST_SERVER_PORT="${arg#*=}"
       shift
       ;;
   esac
@@ -160,7 +169,7 @@ create_launchd_plist() {
         <key>PATH</key>
         <string>/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
         <key>rest_server_PORT</key>
-        <string>127.0.0.1:8000</string>
+        <string>127.0.0.1:${REST_SERVER_PORT}</string>
     </dict>
 </dict>
 </plist>
@@ -190,10 +199,11 @@ create_rcd_service() {
 
 name="rest_server"
 path="${REST_SERVER_PATH}"
+port="${REST_SERVER_PORT}"
 rcvar="rest_server_enable"
 pidfile="/var/run/\${name}.pid"
 command="/usr/local/bin/rest_server"
-command_args="--path=\${path} --no-auth"
+command_args="--path=\${path} --listen 0.0.0.0:\${port} --no-auth"
 log_file="/var/log/rest_server.log"
 required_files="\${command}"
 
