@@ -18,6 +18,8 @@ Repositório adaptado: <https://github.com/pmbatatais/backup-server.git>
 
 - **Sistema operacional:** FreeBSD 14.3
 - **Tecnologia de backup:** [Restic](https://restic.net/)
+- **Servidor de backup:** Repositório REST Server. [Leia a página oficial](https://github.com/restic/rest-server)
+- **Gerenciador de repositórios REST:** [Backrest](https://github.com/garethgeorge/backrest)
 - **Armazenamento:**
   - 2 discos de 1TB em espelhamento (mirror) via ZFS
   - Pool ZFS: `zroot`
