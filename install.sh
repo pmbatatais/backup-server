@@ -8,19 +8,44 @@ REST_SERVER_PATH="/mnt/backups/rest-server"
 # Porta do servidor REST (Padrão :8000)
 REST_SERVER_PORT="8000"
 
+show_help() {
+  cat << EOF
+Uso: $0 [OPÇÕES]
+
+Opções:
+  --path=DIR     Define o diretório de backup (default: $REST_SERVER_PATH)
+  --port=PORTA   Define a porta para o Rest Server (default: $REST_SERVER_PORT)
+  --help         Mostra esta ajuda e sai
+
+Exemplo:
+  $0 --path=/mnt/backups/restic --port=8081
+EOF
+}
+
+# Parser de argumentos
 for arg in "$@"; do
   case $arg in
     --path=*)
       REST_SERVER_PATH="${arg#*=}"
-      shift
       ;;
     --port=*)
       REST_SERVER_PORT="${arg#*=}"
-      shift
+      ;;
+    --help)
+      show_help
+      exit 0
+      ;;
+    *)
+      echo "❌ Erro: argumento desconhecido '$arg'"
+      echo "Use --help para ver as opções disponíveis."
+      exit 1
       ;;
   esac
 done
 
+# Apenas para testes (depois pode remover ou adaptar)
+echo "➡ Diretório: $REST_SERVER_PATH"
+echo "➡ Porta: $REST_SERVER_PORT"
 # Detect sudo or fallback
 run_cmd() {
   if command -v sudo >/dev/null 2>&1; then
