@@ -43,9 +43,9 @@ for arg in "$@"; do
   esac
 done
 
-# Apenas para testes (depois pode remover ou adaptar)
-echo "➡ Diretório: $REST_SERVER_PATH"
-echo "➡ Porta: $REST_SERVER_PORT"
+echo "Diretório: $REST_SERVER_PATH"
+echo "Porta: $REST_SERVER_PORT"
+
 # Detect sudo or fallback
 run_cmd() {
   if command -v sudo >/dev/null 2>&1; then
@@ -272,7 +272,7 @@ EOM
   run_cmd chmod +x "$rcd_path"
   run_cmd sysrc rest_server_enable=YES
   echo "Starting rest_server rc.d service"
-  run_cmd service rest_server start
+  run_cmd service rest_server restart
 }
 
 OS=$(uname -s)
