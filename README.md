@@ -1,6 +1,6 @@
-# **🚀 Guia de Instalação – Servidor de Backup com Rest Server + Restic no FreeBSD**
+# **🚀 Guia de Instalação – Servidor de Backup com Rest Server no FreeBSD**
 
-Este guia descreve como configurar um **servidor de backup** usando **Rest Server** e **Restic**, rodando em **FreeBSD 14.3**.
+Este guia descreve como configurar um **servidor de backup** para armazenamento de backups **Restic** usando **Rest Server** 
 
 ---
 
@@ -17,15 +17,26 @@ Repositório adaptado: <https://github.com/pmbatatais/backup-server.git>
 ## **⚙️ Ambiente utilizado**
 
 - **Sistema operacional:** FreeBSD 14.3
-- **Tecnologia de backup:** [Restic](https://restic.net/)
 - **Servidor de backup:** Repositório REST Server. [Leia a página oficial](https://github.com/restic/rest-server)
-- **Gerenciador de repositórios REST:** [Backrest](https://github.com/garethgeorge/backrest)
 - **Armazenamento:**
   - 2 discos de 1TB em espelhamento (mirror) via ZFS
   - Pool ZFS: `zroot`
   - Dataset: `zroot/rest-server`
   - Mountpoint: `/mnt/backups/rest-server`
   - Compressão: `lz4`
+
+---
+
+## **💾 Sobre o Servidor REST Server e Backup com Restic**
+
+O **REST Server** é um **servidor HTTP de alta performance** que implementa a **API REST do Restic**, permitindo que clientes Restic façam backups remotos de forma segura e eficiente usando a URL `rest`:
+
+O **Restic** é uma ferramenta de backup moderna e confiável, que oferece:
+
+- 🔒 **Criptografia ponta-a-ponta**: os dados são criptografados no cliente antes de serem enviados, garantindo que ninguém consiga acessá-los sem a chave.
+- 📦 **Deduplicação de dados**: arquivos repetidos não são duplicados, economizando espaço em disco.
+
+Combinando **REST Server + Restic**, você cria um **servidor de backup seguro, centralizado e eficiente**, pronto para receber dados de clientes confiáveis.
 
 ---
 
